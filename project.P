@@ -1,0 +1,77 @@
+:-auto_table.
+
+junior(noopur).
+junior(tejas).
+junior(nisha).
+junior(nishant).
+senior(rahul).
+senior(bhushan).
+senior(aditya).
+senior(rasika).
+student(tejas).
+student(nisha).
+salary(noopur, 30000).
+salary(tejas, 25000).
+salary(nisha, 40000).
+salary(nishant, 35000).
+salary(rahul, 80000).
+salary(bhushan, 70000).
+salary(aditya, 70000).
+salary(rasika, 60000).
+
+employee(X) :-
+    junior(X).
+
+employee(X) :-
+    senior(X).
+
+partime(X) :-
+    employee(X),
+    student(X).
+
+manager(X) :-
+    employee(X),
+    \+partime(X).
+
+factor(X, Y) :-
+    junior(X),
+    Y is 0.1.
+
+factor(X, Y) :-
+    senior(X),
+    Y is 0.15.
+
+bonus(X, Y) :-
+    employee(X),
+    student(X),
+    Y is 50.
+
+bonus(X, Y) :-
+   salary(X, Z),
+   factor(X, F),
+   \+student(X),
+   Y is F*Z.
+
+query(X, Y) :-
+    senior(X),
+    manager(X),
+    bonus(X, Y).
+
+bonus(X, Y) :-
+    employee(X),
+    float(Y).
+
+factor(X, Y) :-
+    employee(X),
+    float(Y).
+
+query(X, Y) :-
+    senior(X),
+    manager(X),
+    float(Y).
+
+optimized_query(X, Y):-
+    manager(X),
+    senior(X),
+    salary(X, Z),
+    Y is 0.15*Z.
